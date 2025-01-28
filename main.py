@@ -57,8 +57,8 @@ def extract_frames(video_path, output_dir, frame_interval_seconds):
 
 # Example usage
 if __name__ == "__main__":
-    video_path = input("Enter the path to the video file: ")
-    output_dir = input("Enter the output directory for the frames: ")
+    video_path = input("Enter the path to the video file: ").strip('"')
+    output_dir = input("Enter the output directory for the frames: ").strip('"')
     frame_interval_seconds = int(input("Enter the frame interval in seconds (e.g., 1, 5, 10): "))
 
     extract_frames(video_path, output_dir, frame_interval_seconds)
