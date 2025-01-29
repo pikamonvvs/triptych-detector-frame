@@ -43,7 +43,7 @@ def extract_frames(video_path, output_dir, frame_interval_seconds):
 
         # Save frame at the specified interval
         if frame_count % frame_interval == 0:
-            frame_filename = os.path.join(output_dir, f"frame_{saved_frame_count:04d}.jpg")
+            frame_filename = os.path.join(output_dir, f"frame_{saved_frame_count:04d}.png")
             cv2.imwrite(frame_filename, frame)
             saved_frame_count += 1
             print(f"Saved: {frame_filename}")
