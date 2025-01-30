@@ -1,3 +1,4 @@
+import hashlib
 import os
 import time
 from functools import partial
@@ -31,6 +32,9 @@ def process_video(video_path, output_dir, frame_interval_seconds, divisor):
     # PNG 압축 최적화 파라미터
     png_params = [cv2.IMWRITE_PNG_COMPRESSION, 0]  # 0-9 사이값, 낮을수록 빠르고 파일 크기는 커짐
 
+    # 파일 경로를 해시값으로 변환하여 고유한 ID 생성
+    video_id = hashlib.md5(video_path.encode("utf-8")).hexdigest()[:8]
+
     # 프레임 간격만큼 건너뛰면서 처리
     for frame_count in range(0, total_frames, frame_interval):
         # 원하는 프레임 위치로 직접 이동
@@ -48,7 +52,8 @@ def process_video(video_path, output_dir, frame_interval_seconds, divisor):
         # SIMD 최적화된 리사이징 사용
         frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_LINEAR)
 
-        frame_filename = os.path.join(output_dir, f"{os.path.splitext(filename)[0]}_frame_{saved_frame_count:04d}.png")
+        # 해시 ID를 사용하여 프레임 저장
+        frame_filename = os.path.join(output_dir, f"video_{video_id}_frame_{saved_frame_count:04d}.png")
         cv2.imwrite(frame_filename, frame, png_params)
         saved_frame_count += 1
 
